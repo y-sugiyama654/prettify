@@ -35,24 +35,24 @@ func TestFormatJSON(t *testing.T) {
 			want:    readFile(t, "nested_want.json"),
 			wantErr: false,
 		},
-		// {
-		// 	name:    "正常系: 配列を含むJSONオブジェクト",
-		// 	input:   readFile(t, "array.json"),
-		// 	want:    readFile(t, "array_want.json"),
-		// 	wantErr: false,
-		// },
-		// {
-		// 	name:    "異常系: 不正なJSON",
-		// 	input:   `{"name":"test",}`,
-		// 	want:    "",
-		// 	wantErr: true,
-		// },
-		// {
-		// 	name:    "異常系: JSONではない入力",
-		// 	input:   "not a json",
-		// 	want:    "",
-		// 	wantErr: true,
-		// },
+		{
+			name:    "正常系: 配列を含むJSONオブジェクト",
+			input:   readFile(t, "array.json"),
+			want:    readFile(t, "array_want.json"),
+			wantErr: false,
+		},
+		{
+			name:    "異常系: 不正なJSON",
+			input:   `{"name":"test",}`,
+			want:    "",
+			wantErr: true,
+		},
+		{
+			name:    "異常系: JSONではない入力",
+			input:   "not a json",
+			want:    "",
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
