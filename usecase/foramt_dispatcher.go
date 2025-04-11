@@ -14,6 +14,8 @@ func FormatInput(input []byte, formatType string) (string, error) {
 		formatter = &infrastructure.JSONFormatter{}
 	case "yaml":
 		formatter = &infrastructure.YAMLFormatter{}
+	case "xml":
+		formatter = &infrastructure.XMLFormatter{}
 	default:
 		return "", errors.New("未対応のフォーマットタイプです")
 	}
