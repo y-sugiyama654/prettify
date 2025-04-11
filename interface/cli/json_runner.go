@@ -6,7 +6,7 @@ import (
 	"prettify/usecase"
 )
 
-func Run(args []string) {
+func Run(formatType string, args []string) {
 	var data []byte
 	var err error
 
@@ -20,7 +20,7 @@ func Run(args []string) {
 		os.Exit(1)
 	}
 
-	output, err := usecase.FormatJSON(data)
+	output, err := usecase.FormatInput(data, formatType)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "整形失敗: %v\n", err)
 		os.Exit(1)
