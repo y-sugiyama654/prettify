@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestFormatYAML(t *testing.T) {
-	path := "testdata/yaml_formatter"
+func TestFormatXML(t *testing.T) {
+	path := "testdata/xml_formatter"
 	tests := []struct {
 		name    string
 		input   string
@@ -14,17 +14,12 @@ func TestFormatYAML(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "正常系: 単純なYAMLオブジェクト",
-			input:   readFile(t, "simple.yaml", path),
-			want:    readFile(t, "simple_want.yaml", path),
+			name:    "正常系: 空の入力",
+			input:   readFile(t, "sample.xml", path),
+			want:    readFile(t, "sample_want.xml", path),
 			wantErr: false,
 		},
-		{
-			name:    "異常系: 不正なYAML形式",
-			input:   "invalid: yaml: format",
-			want:    "",
-			wantErr: true,
-		},
+		// 異常系
 		{
 			name:    "異常系: 空の入力",
 			input:   "",
@@ -32,18 +27,19 @@ func TestFormatYAML(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name:    "異常系: 不正な構文（括弧の不一致とシンボル）",
-			input:   `{name: test, @invalid: true, [broken: syntax}`,
+			name:    "異常系: 不正なXML形式",
+			input:   "invalid: xml: format",
 			want:    "",
 			wantErr: true,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			formatter := &YAMLFormatter{}
+			formatter := &XMLFormatter{}
 			got, err := formatter.Format([]byte(tt.input))
 			if (err != nil) != tt.wantErr {
-				t.Errorf("FormatYAML() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("FormatXML() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 
@@ -52,7 +48,7 @@ func TestFormatYAML(t *testing.T) {
 			normalizedWant := strings.TrimSpace(strings.ReplaceAll(tt.want, "\r\n", "\n"))
 
 			if normalizedGot != normalizedWant {
-				t.Errorf("FormatYAML()\ngot:\n%v\nwant:\n%v", normalizedGot, normalizedWant)
+				t.Errorf("FormatXML()\ngot:\n%v\nwant:\n%v", normalizedGot, normalizedWant)
 			}
 		})
 	}
