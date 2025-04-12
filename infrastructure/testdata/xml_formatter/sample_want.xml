@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <book>
+    <title>Go言語によるプログラミング</title>
+    <author>山田太郎</author>
+    <year>2021</year>
+    <price>3000</price>
+  </book>
+  <book>
+    <title>Python入門</title>
+    <author>佐藤花子</author>
+    <year>2020</year>
+    <price>2500</price>
+  </book>
+  <book>
+    <title>JavaScriptの基礎</title>
+    <author>鈴木一郎</author>
+    <year>2019</year>
+    <price>2800</price>
+  </book>
+</library>

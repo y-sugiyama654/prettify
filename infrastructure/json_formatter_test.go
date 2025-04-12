@@ -1,22 +1,13 @@
-package usecase
+package infrastructure
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
 )
 
-func readFile(t *testing.T, filename string) string {
-	t.Helper()
-	content, err := os.ReadFile(filepath.Join("testdata", filename))
-	if err != nil {
-		t.Fatalf("テストデータの読み込みに失敗: %v", err)
-	}
-	return string(content)
-}
-
 func TestFormatJSON(t *testing.T) {
+	path := "testdata/json_formatter"
 	tests := []struct {
 		name    string
 		input   string
@@ -25,20 +16,20 @@ func TestFormatJSON(t *testing.T) {
 	}{
 		{
 			name:    "正常系: 単純なJSONオブジェクト",
-			input:   readFile(t, "simple.json"),
-			want:    readFile(t, "simple_want.json"),
+			input:   readFile(t, "simple.json", path),
+			want:    readFile(t, "simple_want.json", path),
 			wantErr: false,
 		},
 		{
 			name:    "正常系: ネストされたJSONオブジェクト",
-			input:   readFile(t, "nested.json"),
-			want:    readFile(t, "nested_want.json"),
+			input:   readFile(t, "nested.json", path),
+			want:    readFile(t, "nested_want.json", path),
 			wantErr: false,
 		},
 		{
 			name:    "正常系: 配列を含むJSONオブジェクト",
-			input:   readFile(t, "array.json"),
-			want:    readFile(t, "array_want.json"),
+			input:   readFile(t, "array.json", path),
+			want:    readFile(t, "array_want.json", path),
 			wantErr: false,
 		},
 		{
@@ -48,8 +39,8 @@ func TestFormatJSON(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name:    "異常系: JSONではない入力",
-			input:   "not a json",
+			name:    "異常系: JSON形式ではないケース",
+			input:   "not a json.",
 			want:    "",
 			wantErr: true,
 		},
@@ -57,8 +48,8 @@ func TestFormatJSON(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			fmt.Println("テストを実行します。")
-			got, err := FormatJSON([]byte(tt.input))
+			formatter := &JSONFormatter{}
+			got, err := formatter.Format([]byte(tt.input))
 			if (err != nil) != tt.wantErr {
 				t.Errorf("FormatJSON() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -70,4 +61,13 @@ func TestFormatJSON(t *testing.T) {
 			}
 		})
 	}
+}
+
+func readFile(t *testing.T, filename, path string) string {
+	t.Helper()
+	content, err := os.ReadFile(filepath.Join(path, filename))
+	if err != nil {
+		t.Fatalf("テストデータの読み込みに失敗: %v", err)
+	}
+	return string(content)
 }
