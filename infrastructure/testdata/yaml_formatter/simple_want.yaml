@@ -1,0 +1,16 @@
+app:
+  description: A simple application for demonstration purposes.
+  name: MyApp
+  version: 1.0.0
+database:
+  dbname: mydatabase
+  host: localhost
+  password: password
+  port: 5432
+  username: user
+features:
+  analytics:
+    enabled: true
+    provider: google
+  caching: false
+  logging: true
